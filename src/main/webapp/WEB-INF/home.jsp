@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,5 +9,13 @@
 </head>
 <body>
 	<h1>Film Site 2</h1>
+
+
+	<!-- Remove Film Test -->
+	<form action="removeFilm.do">
+		<label for="fname">Film id:</label>
+		<input type="text"id="filmid" name="filmid"><br>
+		 <input type="submit" value="Submit">
+	</form>
 </body>
 </html>

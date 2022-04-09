@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,14 +32,34 @@ public class FilmController {
 		System.out.println("*** FilmController.addFilm() *** ");
 		ModelAndView mv = new ModelAndView();
 		System.out.println(film);
-//		mv.addObject("president", p);
+	//	mv.addObject("president", p);
 		mv.setViewName("WEB-INF/result.jsp");
 		return mv;
 	}
 	
-//	From Miguel:
-//	String[] featuresArr = rs.getString("special_features").split(",");
-//	Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
-//	film.setSpecialFeatures(featuresSet);
-
+	@RequestMapping(path = "removeFilm.do")
+	public String removeFilmById(Model model, String filmid) {
+		
+		int filmId;
+		boolean filmDeleted = false;
+		
+		try {
+			filmId = Integer.parseInt(filmid);
+			if(filmId >= 1000)
+				filmDeleted = filmDao.deleteFilmById(filmId);
+		}catch(Exception e) {
+			filmDeleted = false;			
+		}
+		System.out.println("Film Deleted: " + filmDeleted);
+		model.addAttribute("filmDeleted", filmDeleted);		
+		return "WEB-INF/film.jsp";
+		
+	}
+	
+	@RequestMapping(path = "updateFilm.do")
+	public String updateFilm(Model model, Film film) {
+		
+		return "WEB-INF/film";
+	}
+	
 }
