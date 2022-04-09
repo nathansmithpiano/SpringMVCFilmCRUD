@@ -24,10 +24,20 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
-	@RequestMapping(path = { "displayFilms.do" })
-	public String displayFilm() {
+	@RequestMapping(path = { "displayFilm.do" })
+	public String displayFilm(Model model, String filmid) {
+		
 		int filmId;
-		return "WEB-INF/displayFilms.jsp";
+		Film f = null;
+		
+		try {
+			filmId = Integer.parseInt(filmid);
+				f = filmDao.getFilmById(filmId);
+		}catch(Exception e) {
+		}
+		model.addAttribute("film", f);		
+		return "WEB-INF/film.jsp";
+		
 	}
 	
 	@RequestMapping(path = "removeFilm.do")
