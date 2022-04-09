@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.skilldistillery.mvcsite.data.FilmDAO;
+import com.skilldistillery.mvcsite.entities.Film;
 
 @Controller
 public class FilmController {
@@ -16,5 +17,6 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
+	
 	
 }

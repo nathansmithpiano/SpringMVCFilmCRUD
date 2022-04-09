@@ -1,5 +1,14 @@
 package com.skilldistillery.mvcsite.data;
 
-public class FilmDAOJdbcImpl implements FilmDAO {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
+import com.skilldistillery.mvcsite.entities.Actor;
+
+
+public class FilmDAOJdbcImpl implements FilmDAO {
+	
+	
 }

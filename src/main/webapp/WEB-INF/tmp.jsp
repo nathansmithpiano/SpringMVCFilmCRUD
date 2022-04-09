@@ -8,6 +8,6 @@
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<h1>Film Site 2</h1>
+	<h1>Remove film</h1>
 </body>
 </html>
