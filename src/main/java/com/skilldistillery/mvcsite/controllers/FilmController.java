@@ -26,17 +26,11 @@ public class FilmController {
 		return "WEB-INF/displayFilms.jsp";
 	}
 	
-	@RequestMapping(path = "addFilm.do",
-			params = { "title", "description", "releaseYear", "languageId", "rentalDuration", 
-					"rentalRate", "length", "replacementCost", "rating", "specialFeatures" },
-			method = RequestMethod.GET)
-	public ModelAndView addFilm(String title, String description, Integer releaseYear, 
-								int languageId, int rentalDuration, int rentalRate,
-								Integer length, Double replacementCost, String rating, 
-								Set<String> specialFeatures) {
+	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
+	public ModelAndView addFilm(Film film, String[] sf) {
 		System.out.println("*** FilmController.addFilm() *** ");
 		ModelAndView mv = new ModelAndView();
-		Film f = new Film();
+		System.out.println(film);
 //		mv.addObject("president", p);
 		mv.setViewName("WEB-INF/result.jsp");
 		return mv;
