@@ -18,7 +18,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 	public static void main(String[] args) {
 		FilmDAOJdbcImpl dao = new FilmDAOJdbcImpl();
-		Film film = dao.getFilmById(1014);
+		Film film = dao.getFilmById(100);
 		System.out.println(film);
 		film.setDescription("improved updeate 2");
 		boolean updated = dao.updateFilm(film);
@@ -121,12 +121,9 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			int updateCount = stmt.executeUpdate();
-			if(updateCount == 0)
+			if(updateCount == 0) {
 				return false;
-			
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
-			updateCount = stmt.executeUpdate();
+			}
 			
 			conn.commit(); // COMMIT TRANSACTION
 		} catch (SQLException sqle) {
@@ -184,9 +181,9 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 //			System.out.println(stmt);
 
 			int updateCount = stmt.executeUpdate();
-			if(updateCount == 0)
+			if(updateCount == 0) {
 				return false;
-
+			}
 			if (updateCount == 1) {
 				conn.commit(); // COMMIT TRANSACTION
 			}
@@ -252,12 +249,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			e.printStackTrace();
 		}
 		return films;
-		
-		
-		
+	
 	}
 }
-
-
-
-
