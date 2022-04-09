@@ -24,19 +24,20 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
-	@RequestMapping(path = { "displayFilms.do" })
-	public String displayFilm() {
-		return "WEB-INF/displayFilms.jsp";
-	}
-	
-	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film, String[] sf) {
-		System.out.println("*** FilmController.addFilm() *** ");
-		ModelAndView mv = new ModelAndView();
-		System.out.println(film);
-	//	mv.addObject("president", p);
-		mv.setViewName("WEB-INF/result.jsp");
-		return mv;
+	@RequestMapping(path = { "displayFilm.do" })
+	public String displayFilm(Model model, String filmid) {
+		
+		int filmId;
+		Film f = null;
+		
+		try {
+			filmId = Integer.parseInt(filmid);
+				f = filmDao.getFilmById(filmId);
+		}catch(Exception e) {
+		}
+		model.addAttribute("film", f);		
+		return "WEB-INF/film.jsp";
+		
 	}
 	
 	@RequestMapping(path = "removeFilm.do")
@@ -62,6 +63,23 @@ public class FilmController {
 	public String updateFilm(Model model, Film film) {
 		
 		return "WEB-INF/film";
+	}
+	
+	
+	@RequestMapping(path = "addFilm.do",
+			params = { "title", "description", "releaseYear", "languageId", "rentalDuration", 
+					"rentalRate", "length", "replacementCost", "rating", "specialFeatures" },
+			method = RequestMethod.GET)
+	public ModelAndView addFilm(String title, String description, Integer releaseYear, 
+								int languageId, int rentalDuration, int rentalRate,
+								Integer length, Double replacementCost, String rating, 
+								Set<String> specialFeatures) {
+		System.out.println("*** FilmController.addFilm() *** ");
+		ModelAndView mv = new ModelAndView();
+		Film f = new Film();
+//		mv.addObject("president", p);
+		mv.setViewName("WEB-INF/result.jsp");
+		return mv;
 	}
 	
 }

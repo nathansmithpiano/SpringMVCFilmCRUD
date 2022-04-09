@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<h1>Film Removed: ${filmDeleted}</h1> 
+	<h1>Film title : ${film.title}</h1> 
 	
 	
 </body>
