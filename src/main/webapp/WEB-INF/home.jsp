@@ -12,7 +12,7 @@
 	
 	<a href="goSearchFilm.do">Search Film By ID</a>
 	<br>
-	<a href="goAddFilm.do">Add New Film</a>
+	<a href="goAddFilm.do?status=add">Add New Film</a>
 	<br>
 	<br>
 	<br>
