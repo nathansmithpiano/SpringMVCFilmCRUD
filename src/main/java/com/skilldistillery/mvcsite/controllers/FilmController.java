@@ -17,5 +17,9 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
+	@RequestMapping(path = { "displayFilms.do" })
+	public String displayFilm() {
+		return "WEB-INF/displayFilms.jsp";
+	}
 
 }
