@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -120,6 +121,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			int updateCount = stmt.executeUpdate();
+			if(updateCount == 0)
+				return false;
 			
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -181,6 +184,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 //			System.out.println(stmt);
 
 			int updateCount = stmt.executeUpdate();
+			if(updateCount == 0)
+				return false;
 
 			if (updateCount == 1) {
 				conn.commit(); // COMMIT TRANSACTION
