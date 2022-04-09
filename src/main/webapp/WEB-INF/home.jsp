@@ -13,8 +13,8 @@
 
 	<!-- Remove Film Test -->
 	<form action="removeFilm.do">
-		<label for="fname">Film id:</label>
-		<input type="text"id="filmid" name="filmid"><br>
+		<label for="fname">Film to Remove id:</label>
+		<input type="text"id="filmid" name="filmid">
 		 <input type="submit" value="Submit">
 	</form>
 	
