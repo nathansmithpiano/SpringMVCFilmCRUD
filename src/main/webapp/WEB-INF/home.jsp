@@ -17,5 +17,11 @@
 		<input type="text"id="filmid" name="filmid"><br>
 		 <input type="submit" value="Submit">
 	</form>
+	
+	<form action="displayFilm.do">
+		<label for="fname">Film id to be displayed:</label>
+		<input type="text"id="filmid" name="filmid"><br>
+		 <input type="submit" value="Submit">
+	</form>
 </body>
 </html>
