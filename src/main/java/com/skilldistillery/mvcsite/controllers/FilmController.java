@@ -62,7 +62,14 @@ public class FilmController {
 	@RequestMapping(path = "updateFilm.do")
 	public String updateFilm(Model model, Film film) {
 		
-		return "WEB-INF/film";
+		boolean updated = filmDao.updateFilm(film);
+		if(updated) {
+			model.addAttribute(film);
+		}
+		else {
+			film = new Film();
+		}
+		return "WEB-INF/film.jsp";
 	}
 	
 	
@@ -80,6 +87,23 @@ public class FilmController {
 //		mv.addObject("president", p);
 		mv.setViewName("WEB-INF/result.jsp");
 		return mv;
+	
+	}
+	//-------------------------------------------
+		@RequestMapping(path = { "searchFilm.do" })
+		public String searchByKeyWord(Model model, String filmid) {
+			
+			String m = "mon";
+			Film f = null;
+			
+			try {
+				
+					filmDao.searchFilms(m);
+			}catch(Exception e) {
+			}
+			return "WEB-INF/film.jsp";
+			
+		}
 	}
 	
-}
+
