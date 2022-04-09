@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -14,13 +13,18 @@ import java.util.Set;
 import com.skilldistillery.mvcsite.entities.Film;
 
 public class FilmDAOJdbcImpl implements FilmDAO {
+	
 
 	public static void main(String[] args) {
 		FilmDAOJdbcImpl dao = new FilmDAOJdbcImpl();
-		boolean deleted = dao.deleteFilmById(1009);
-		System.out.println("Deleted: " + deleted);
+		Film film = dao.getFilmById(1014);
+		System.out.println(film);
+		film.setDescription("improved updeate 2");
+		boolean updated = dao.updateFilm(film);
+		
+		System.out.println("Updated: " + updated);
 	}
-
+	
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false"
 			+ "&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
 	private String user = "student";
@@ -68,13 +72,21 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					film.setLength(rs.getInt("length"));
 					film.setReplacementCost(rs.getDouble("Replacement_cost"));
 					film.setRating(rs.getString("rating"));
-
-//					String[] featuresArr = rs.getString("special_features").split(",");
-//					Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
-//					film.setSpecialFeatures(featuresSet);
-
+					
+					
+					String features = rs.getString("special_features");
+					if(features != null) {
+						String[] featuresArr = rs.getString("special_features").split(",");
+						
+						Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
+						film.setSpecialFeatures(featuresSet);
+					}
+					else{
+						film.setSpecialFeatures(new HashSet<>());
+					}
+					
 					film.setLanguage(rs.getNString("language.name"));
-
+					
 //					film.setActors(findActorsByFilmId(id));
 
 				}
@@ -87,11 +99,11 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		}
 		return film;
 	}
-
+	
 	@Override
 	public Film addFilm(Film film) {
 		Film newFilm = null;
-
+		
 		return newFilm;
 	}
 
@@ -100,19 +112,19 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
-
+			
 			conn.setAutoCommit(false); // START TRANSACTION
-
+			
 			String sql = "DELETE FROM film WHERE id = ?";
-
+			
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			int updateCount = stmt.executeUpdate();
-
+			
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			updateCount = stmt.executeUpdate();
-
+			
 			conn.commit(); // COMMIT TRANSACTION
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -129,13 +141,65 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 	}
 
 	@Override
-	public Film updateFilmById(int id) {
-		return null;
+	public boolean updateFilm(Film film) {
+		Connection conn = null;
+		try {
+			/*
+			 * assume everything except the actor's id (PK) may have changed update the
+			 * actor's fn, ln, and their current list of films in the database
+			 */
+			conn = DriverManager.getConnection(URL, user, pass);
+
+			conn.setAutoCommit(false); // START TRANSACTION
+
+			String sql = "UPDATE film SET \n"
+					+ "title= ? ,\n"
+					+ "description= ? ,\n"
+					+ "release_year= ?,\n"
+					+ "language_id= ?,\n"
+					+ "rental_duration = ?,\n"
+					+ "rental_rate = ?,\n"
+					+ "length = ?,\n"
+					+ "replacement_cost = ?,\n"
+					+ "rating = ?,\n"
+					+ "special_features = ?\n"
+					+ "WHERE id= ?;";
+
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setInt(4, film.getLanguageId());
+			stmt.setInt(5, film.getRentalDuration());
+			stmt.setDouble(6, film.getRental_rate());
+			stmt.setInt(7, film.getLength());
+			stmt.setDouble(8, film.getReplacementCost());
+			stmt.setString(9, film.getRating());
+			stmt.setString(10, null);
+			stmt.setInt(11, film.getId());
+			
+//			System.out.println(stmt);
+
+			int updateCount = stmt.executeUpdate();
+
+			if (updateCount == 1) {
+				conn.commit(); // COMMIT TRANSACTION
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} // ROLLBACK TRANSACTION ON ERROR
+				catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			return false;
+		}
+		return true;
 	}
-	
-		
-		
-		
+
 	@Override
 	public List<Film> searchFilms(String keyword) {
 		List<Film> films = new ArrayList<Film>();
@@ -168,9 +232,9 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					film.setRating(rs.getString("rating"));
 					film.setLanguage(rs.getNString("language.name"));
 
-//					String[] featuresArr = rs.getString("special_features").split(",");
-//					Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
-//					film.setSpecialFeatures(featuresSet);
+					String[] featuresArr = rs.getString("special_features").split(",");
+					Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
+					film.setSpecialFeatures(featuresSet);
 					
 					films.add(film);
 
@@ -188,3 +252,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		
 	}
 }
+
+
+
+
