@@ -9,6 +9,13 @@
 </head>
 <body>
 	<h1>Film Site 2</h1>
+	
+	<a href="goSearchFilm.do">Search Film By ID</a>
+	<br>
+	<a href="goAddFilm.do">Add New Film</a>
+	<br>
+	<br>
+	<br>
 
 
 	<!-- Remove Film Test -->
