@@ -16,14 +16,11 @@ import com.skilldistillery.mvcsite.entities.Film;
 public class FilmController {
 	
 	// THIS IS A TEST, REMOVE THIS
+	
 
 	@Autowired
 	private FilmDAO filmDao;
 
-	@RequestMapping(path = { "/", "home.do" })
-	public String home() {
-		return "WEB-INF/home.jsp";
-	}
 	@RequestMapping(path = { "displayFilm.do" })
 	public String displayFilm(Model model, String filmid) {
 		
@@ -32,7 +29,7 @@ public class FilmController {
 		
 		try {
 			filmId = Integer.parseInt(filmid);
-				f = filmDao.getFilmById(filmId);
+			f = filmDao.getFilmById(filmId);
 		}catch(Exception e) {
 		}
 		model.addAttribute("film", f);
