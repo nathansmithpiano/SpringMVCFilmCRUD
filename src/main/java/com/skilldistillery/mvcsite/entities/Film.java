@@ -151,8 +151,15 @@ public class Film {
 		this.rating = rating;
 	}
 
-	public Set<String> getSpecialFeatures() {
-		return specialFeatures;
+	public String getSpecialFeatures() {
+		if(specialFeatures == null || specialFeatures.size() == 0)
+			return "";
+		
+		String res = specialFeatures.toString();
+		res = res.replace("[", "");
+		res = res.replace("]", "");
+		
+		return res;
 	}
 
 	public void setSpecialFeatures(Set<String> specialFeatures) {

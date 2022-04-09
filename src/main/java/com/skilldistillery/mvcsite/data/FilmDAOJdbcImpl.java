@@ -130,39 +130,12 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 	@Override
 	public Film updateFilmById(int id) {
-		
-		
-		
-		
-		Film newFilm = null;
-
-		String sql = "INSERT INTO film (title, description, language_id, rental_duration, rental_rate, replacement_cost) "
-				+ " VALUES (?,?,?,?,?,? WHERE id= ?)";
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			conn.setAutoCommit(false);
-			PreparedStatement stmt = conn.prepareStatement(sql);
-
-			stmt.setString(1, newFilm.getTitle());
-			stmt.setInt(7, id);
-			stmt.setInt(7, id);
-			stmt.setInt(7, id);
-			stmt.setInt(7, id);
-			stmt.setInt(7, id);
-			stmt.setInt(7, id);
-			stmt.setInt(7, id);
-			int updateCount = stmt.executeUpdate();
-
-			
-		} catch (SQLException e) {
-			// Something went wrong.
-			System.err.println("Error during inserts.");
-			e.printStackTrace();
-		}
-		return newFilm;
+		return null;
 	}
-
+	
+		
+		
+		
 	@Override
 	public List<Film> searchFilms(String keyword) {
 		List<Film> films = new ArrayList<Film>();
