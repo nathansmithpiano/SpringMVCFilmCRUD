@@ -81,10 +81,10 @@
 		<br>
 		<input type="radio" id="NC17" name="rating" value="NC17">
 		<label for="NC17">NC17</label>
-		<input type="text" id="test" name="test" size=20 value="default">
 		
 		<!-- Special Features -->
 		<p>Special Features:</p>
+		<input type="text" id="test" name="test" size=120 value="default">
 		<input type="checkbox" id="trailers" name="sf" value="Trailers">
 		<label for="trailers">Trailers</label>
 		<br>
