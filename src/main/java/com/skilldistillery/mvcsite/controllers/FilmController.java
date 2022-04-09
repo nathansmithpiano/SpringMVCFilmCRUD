@@ -22,6 +22,10 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
+	@RequestMapping(path = { "displayFilms.do" })
+	public String displayFilm() {
+		return "WEB-INF/displayFilms.jsp";
+	}
 	
 	@RequestMapping(path = "removeFilm.do")
 	public String removeFilmById(Model model, String filmid) {
