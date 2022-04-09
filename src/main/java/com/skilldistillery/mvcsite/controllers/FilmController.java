@@ -35,7 +35,7 @@ public class FilmController {
 				f = filmDao.getFilmById(filmId);
 		}catch(Exception e) {
 		}
-		model.addAttribute("film", f);		
+		model.addAttribute("film", f);
 		return "WEB-INF/film.jsp";
 		
 	}
