@@ -17,5 +17,4 @@ public class FilmController {
 		return "WEB-INF/home.jsp";
 	}
 	
-	
 }
