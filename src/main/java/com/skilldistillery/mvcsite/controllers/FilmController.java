@@ -12,11 +12,10 @@ public class FilmController {
 
 	@Autowired
 	private FilmDAO filmDao;
-	
-	@RequestMapping(path = {"/", "home.do"})
+
+	@RequestMapping(path = { "/", "home.do" })
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
-	
-	
+
 }
