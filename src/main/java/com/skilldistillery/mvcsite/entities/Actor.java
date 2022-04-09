@@ -66,11 +66,7 @@ public class Actor {
 		Actor other = (Actor) obj;
 		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName);
 	}
-
-<<<<<<< HEAD
-
-
 }
-=======
-}
->>>>>>> 34a09e44772ef185dc1c810f460459ae62dd40c4
+//}<<<<<<<HEAD
+
+//}=======}>>>>>>>34 a09e44772ef185dc1c810f460459ae62dd40c4}
