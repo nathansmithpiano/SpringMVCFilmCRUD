@@ -104,6 +104,7 @@
 				<br>
 				<hr>
 				<input type="submit" value="Search" />
+				<input type="submit" value="update" name = "update" />
 				<script>
 					/* Language Radio */
 					var langId = ${film.languageId };

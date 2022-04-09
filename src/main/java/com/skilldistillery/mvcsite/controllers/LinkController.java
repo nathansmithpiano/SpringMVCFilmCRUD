@@ -1,6 +1,7 @@
 package com.skilldistillery.mvcsite.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -17,7 +18,8 @@ public class LinkController {
 	}
 	
 	@RequestMapping(path = { "goAddFilm.do" })
-	public String goAddFilm() {
+	public String goAddFilm(Model model, boolean addFlag) {
+		model.addAttribute("addFlag", addFlag);
 		return "WEB-INF/addFilm.jsp";
 	}
 	

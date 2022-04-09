@@ -70,18 +70,12 @@ public class FilmController {
 	}
 	
 	
-	@RequestMapping(path = "addFilm.do",
-			params = { "title", "description", "releaseYear", "languageId", "rentalDuration", 
-					"rentalRate", "length", "replacementCost", "rating", "specialFeatures" },
-			method = RequestMethod.GET)
-	public ModelAndView addFilm(String title, String description, Integer releaseYear, 
-								int languageId, int rentalDuration, int rentalRate,
-								Integer length, Double replacementCost, String rating, 
-								Set<String> specialFeatures) {
+	@RequestMapping(path = "addFilm.do",method = RequestMethod.GET)
+	public ModelAndView addFilm(Film film, String update) {
+		System.out.println(update);
 		System.out.println("*** FilmController.addFilm() *** ");
 		ModelAndView mv = new ModelAndView();
 		Film f = new Film();
-//		mv.addObject("president", p);
 		mv.setViewName("WEB-INF/result.jsp");
 		return mv;
 	
