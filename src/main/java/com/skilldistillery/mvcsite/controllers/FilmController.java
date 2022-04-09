@@ -2,6 +2,7 @@ package com.skilldistillery.mvcsite.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.skilldistillery.mvcsite.data.FilmDAO;
@@ -17,5 +18,31 @@ public class FilmController {
 	public String home() {
 		return "WEB-INF/home.jsp";
 	}
-
+	
+	@RequestMapping(path = "removeFilm.do")
+	public String removeFilmById(Model model, String filmid) {
+		
+		int filmId;
+		boolean filmDeleted = false;
+		
+		try {
+			filmId = Integer.parseInt(filmid);
+			if(filmId >= 1000)
+				filmDeleted = filmDao.deleteFilmById(filmId);
+		}catch(Exception e) {
+			filmDeleted = false;			
+		}
+		System.out.println("Film Deleted: " + filmDeleted);
+		model.addAttribute("filmDeleted", filmDeleted);		
+		return "WEB-INF/film.jsp";
+		
+	}
+	
+	@RequestMapping(path = "updateFilm.do")
+	public String updateFilm(Model model, Film film) {
+		
+		return "WEB-INF/film";
+	}
+	
+	
 }

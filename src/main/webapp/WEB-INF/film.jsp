@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<h1>Remove film</h1>
+	<h1>Film Removed: ${filmDeleted}</h1> 
+	
+	
 </body>
 </html>
