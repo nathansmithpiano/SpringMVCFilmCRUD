@@ -23,7 +23,6 @@ public class FilmController {
 		return "WEB-INF/home.jsp";
 	}
 	
-<<<<<<< HEAD
 	@RequestMapping(path = "removeFilm.do")
 	public String removeFilmById(Model model, String filmid) {
 		
@@ -50,7 +49,6 @@ public class FilmController {
 	}
 	
 	
-=======
 	@RequestMapping(path = "addFilm.do",
 			params = { "title", "description", "releaseYear", "languageId", "rentalDuration", 
 					"rentalRate", "length", "replacementCost", "rating", "specialFeatures" },
@@ -67,10 +65,4 @@ public class FilmController {
 		return mv;
 	}
 	
-//	From Miguel:
-//	String[] featuresArr = rs.getString("special_features").split(",");
-//	Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
-//	film.setSpecialFeatures(featuresSet);
-
->>>>>>> 4eb083abaa90a8ffef5f64bee1b66d91879e06f1
 }
