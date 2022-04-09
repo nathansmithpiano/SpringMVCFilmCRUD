@@ -16,54 +16,57 @@ import com.skilldistillery.mvcsite.entities.Film;
 public class FilmController {
 
 	// THIS IS A TEST, REMOVE THIS
+	
 
 	@Autowired
 	private FilmDAO filmDao;
 
-	@RequestMapping(path = { "/", "home.do" })
-	public String home() {
-		return "WEB-INF/home.jsp";
-	}
-
 	@RequestMapping(path = { "displayFilm.do" })
 	public String displayFilm(Model model, String filmid) {
-
+		
 		int filmId;
 		Film f = null;
-
+		
 		try {
 			filmId = Integer.parseInt(filmid);
 			f = filmDao.getFilmById(filmId);
-		} catch (Exception e) {
+		}catch(Exception e) {
 		}
 		model.addAttribute("film", f);
 		return "WEB-INF/film.jsp";
-
+		
 	}
-
+	
 	@RequestMapping(path = "removeFilm.do")
 	public String removeFilmById(Model model, String filmid) {
-
+		
 		int filmId;
 		boolean filmDeleted = false;
-
+		
 		try {
 			filmId = Integer.parseInt(filmid);
-			if (filmId >= 1000)
+			if(filmId >= 1000)
 				filmDeleted = filmDao.deleteFilmById(filmId);
-		} catch (Exception e) {
-			filmDeleted = false;
+		}catch(Exception e) {
+			filmDeleted = false;			
 		}
 		System.out.println("Film Deleted: " + filmDeleted);
-		model.addAttribute("filmDeleted", filmDeleted);
+		model.addAttribute("filmDeleted", filmDeleted);		
 		return "WEB-INF/film.jsp";
-
+		
 	}
-
+	
 	@RequestMapping(path = "updateFilm.do")
 	public String updateFilm(Model model, Film film) {
-
-		return "WEB-INF/film";
+		
+		boolean updated = filmDao.updateFilm(film);
+		if(updated) {
+			model.addAttribute(film);
+		}
+		else {
+			film = new Film();
+		}
+		return "WEB-INF/film.jsp";
 	}
 
 	@RequestMapping(path = "addFilm.do", params = { "title", "description", "releaseYear", "languageId",
