@@ -14,6 +14,8 @@ import com.skilldistillery.mvcsite.entities.Film;
 
 @Controller
 public class FilmController {
+	
+	// THIS IS A TEST, REMOVE THIS
 
 	@Autowired
 	private FilmDAO filmDao;
