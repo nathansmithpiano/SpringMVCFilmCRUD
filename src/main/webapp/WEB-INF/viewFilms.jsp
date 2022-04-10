@@ -13,14 +13,25 @@
 </head>
 <body>
 
-	<h1>Films containing: ${searchTerm}</h1>
+
+	<h1>Film Search</h1>
+
+	<form action="searchFilm.do" id="searchForm">
+		<div class="searchByKeywordFrom">
+			<label id = "keywordLabel">Keyword</label> 
+			<input type="text" name="filmid" placeholder="${searchTerm}">
+			<button type="submit" class="btn btn-success">Search</button>
+		</div>
+	</form>
+
 
 	<c:choose>
 
 		<c:when test="${empty films}">
-            No Films by search term: ${searchTerm}
+            <h4>${films.size()} films found</h4>
          </c:when>
 		<c:otherwise>
+			<h4>${films.size()} films found</h4>
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr>
