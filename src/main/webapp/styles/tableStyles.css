@@ -1,5 +1,35 @@
-td {
-	max-width: 400px;
-	text-overflow: ellipsis;
-	overflow: scroll;
+body {
+	margin-top: 2%;
+	max-width: 95%;
+}
+
+h1{
+	display: flex;
+	justify-content: center;
+	
+}
+h4{
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+.searchByKeywordFrom {
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	gap: 10px;
+}
+
+
+#keywordLabel {
+	font-size: 30px;
+}
+
+table {
+	overflow-x: scroll;
+	max-width: 98%;
+	margin: 4%;
 }
