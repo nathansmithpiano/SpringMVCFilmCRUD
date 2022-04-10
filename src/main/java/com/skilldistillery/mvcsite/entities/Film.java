@@ -35,8 +35,8 @@ public class Film {
 
 	private double replacementCost;
 
-	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
-			double rental_rate, int length, double replacementCost, String rating, Set<String> specialFeatures,
+	public Film(int id, String title, String description, Integer releaseYear, int languageId, int rentalDuration,
+			double rental_rate, Integer length, double replacementCost, String rating, Set<String> specialFeatures,
 			String language) {
 		super();
 		this.id = id;
@@ -101,7 +101,7 @@ public class Film {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(int releaseYear) {
+	public void setReleaseYear(Integer releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 
@@ -129,7 +129,7 @@ public class Film {
 		this.rental_rate = rental_rate;
 	}
 
-	public int getLength() {
+	public Integer getLength() {
 		return length;
 	}
 
@@ -174,10 +174,6 @@ public class Film {
 
 	public void setCast(List<Actor> cast) {
 		this.cast = cast;
-	}
-
-	public void setReleaseYear(Integer releaseYear) {
-		this.releaseYear = releaseYear;
 	}
 
 	public void setLength(Integer length) {

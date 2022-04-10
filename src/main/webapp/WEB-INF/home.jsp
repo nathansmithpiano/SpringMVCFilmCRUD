@@ -15,6 +15,8 @@
 
 	<a href="goAddFilm.do?status=add">Add New Film</a>
 	<br>
+	<a href='searchFilm.do?filmid='>Search Films By keyword</a>
+	<br>
 	<br>
 	<br>
 

@@ -26,5 +26,4 @@ public class LinkController {
 	public String goSearchFilm() {
 		return "WEB-INF/searchFilm.jsp";
 	}
-
 }
