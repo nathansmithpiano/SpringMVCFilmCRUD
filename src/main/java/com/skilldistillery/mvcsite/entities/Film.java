@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+
+
 public class Film {
 	private int id;
 
@@ -196,6 +198,9 @@ public class Film {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public List<Actor >setActors(List<Actor> actors) {
+		return this.cast = actors;
 	}
 
 	public void basicDisplay() {

@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.skilldistillery.mvcsite.entities.Actor;
 import com.skilldistillery.mvcsite.entities.Film;
 
 public class FilmDAOJdbcImpl implements FilmDAO {
@@ -50,7 +51,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "select film.id, film.title, film.description, film.release_year, film.language_id, film.rental_duration, film.rental_rate, "
+			String sql = "select film.id, film.title, film.description, film.release_year, film.language_id, film.rental_duration,"
+					+ " film.rental_rate, "
 					+ " film.length, film.replacement_cost, film.rating, film.special_features, language.name "
 					+ " from film join language on film.language_id = language.id WHERE film.id = ?";
 
@@ -85,7 +87,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 					film.setLanguage(rs.getNString("language.name"));
 
-//					film.setActors(findActorsByFilmId(id));
+					film.setActors(findActorsByFilmId(id));
 
 				}
 				rs.close();
@@ -226,6 +228,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
 					film.setSpecialFeatures(featuresSet);
 
+					film.setActors(findActorsByFilmId(film.getId()));
+
 					films.add(film);
 
 				}
@@ -239,4 +243,32 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		return films;
 
 	}
+
+	public List<Actor> findActorsByFilmId(int filmId) {
+		List<Actor> actors = new ArrayList<Actor>();
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+
+			String sql = "select id, first_name, last_name FROM actor join film_actor on actor.id = film_actor.actor_id where film_actor.film_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, filmId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Actor actor = new Actor();
+				actor.setId(rs.getInt(1));
+				actor.setFirstName(rs.getString(2));
+				actor.setLastName(rs.getString(3));
+				actors.add(actor);
+//				findFilmByKeyWord(sql);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return actors;
+	}
+
 }
