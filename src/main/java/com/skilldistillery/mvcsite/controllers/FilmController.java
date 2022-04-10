@@ -83,8 +83,7 @@ public class FilmController {
 		
 		return "WEB-INF/message.jsp";
 	}
-<<<<<<< HEAD
-}
+
 
 	// -------------------------------------------
 //	@RequestMapping(path = { "searchFilm.do" })
@@ -108,7 +107,6 @@ public class FilmController {
 //
 //	}
 
-=======
 	
 	@RequestMapping(path = "addFilm.do")
 	public String addFilm(Model model, Film film) {
@@ -140,4 +138,3 @@ public class FilmController {
 		return "WEB-INF/viewFilms.jsp";
 	}
 }
->>>>>>> 4c1a648db86e01340f07c7c731159709f567c021
