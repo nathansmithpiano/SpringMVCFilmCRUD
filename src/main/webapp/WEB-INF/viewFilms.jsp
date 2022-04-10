@@ -41,8 +41,8 @@
 						<th>Title</th>
 						<th>Year</th>
 						<th>Description</th>
-						<th>Lan</th>
-						<th>Rent len</th>
+						<th>Language</th>
+						<th>Rent Length</th>
 						<th>Rental Rate</th>
 						<th>length</th>
 						<th>Cost</th>
