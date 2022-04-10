@@ -12,7 +12,10 @@
 	
 	<a href="goSearchFilm.do">Search Film By ID</a>
 	<br>
+
 	<a href="goAddFilm.do?status=add">Add New Film</a>
+	<br>
+	<a href='searchFilm.do?filmid='>Search Films By keyword</a>
 	<br>
 	<br>
 	<br>
@@ -27,9 +30,19 @@
 	
 	<form action="displayFilm.do">
 		<label for="fname">Film id to be displayed:</label>
-		<input type="text"id="filmid" name="filmid"><br>
+		<input type="text"id="filmid" name="filmid">
 		 <input type="submit" value="Submit">
 	</form>
+	
+	
+	<form action="searchFilm.do">
+		<label for="fname">Search For film by Keyword: </label>
+		<input type="text"id="filmid" name="filmid">
+		 <input type="submit" value="Submit">
+	</form>
+	
+	
+	
 	
 </body>
 </html>

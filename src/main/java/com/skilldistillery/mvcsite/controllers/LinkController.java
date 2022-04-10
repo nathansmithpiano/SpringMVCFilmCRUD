@@ -12,6 +12,11 @@ public class LinkController {
 		return "WEB-INF/home.jsp";
 	}
 	
+	@RequestMapping(path = { "goViewFilm.do" })
+	public String goViewFilm() {
+		return "WEB-INF/viewFilm.jsp";
+	}
+	
 	@RequestMapping(path = { "goAddFilm.do" })
 	public String goAddFilm() {
 		return "WEB-INF/film.jsp";
@@ -21,5 +26,4 @@ public class LinkController {
 	public String goSearchFilm() {
 		return "WEB-INF/searchFilm.jsp";
 	}
-
 }
