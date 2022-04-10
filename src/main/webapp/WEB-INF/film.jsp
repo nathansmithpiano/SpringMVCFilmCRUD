@@ -9,19 +9,19 @@
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<h1>Film title : ${film.title}</h1> 
 	
 	<c:choose>
-		<c:when test="${empty film }">
+		<c:when test='${empty film and((param.status) != "add")}'>
 			<h4>FILM NOT FOUND</h4>
 		</c:when>
 		<c:otherwise>
 			<!-- new stuff -->
 			<h3>Film Details</h3>
-			<form action="addFilm.do" method="GET">
+			<form id="filmForm" action="addFilm.do" method="POST">
+				<input type="hidden" name="id" value="${film.id }">
 				<!-- Title -->
 				<label for="title">Title:</label>
-				<input type="text" name="title" size="30" value="${film.title}">
+				<input type="text" name="title" size="30" value="${film.title}" required>
 				<!-- Description -->
 				<br>
 				<label for="description">Description:</label>
@@ -33,22 +33,22 @@
 				<!-- Language -->
 				<br>
 				<p>Language:</p>
-				<input type="radio" id="english" name="language" value="1">
+				<input type="radio" id="english" name="languageId" value="1" required>
 				<label for="english">English</label>
 				<br>
-				<input type="radio" id="italian" name="language" value="2">
+				<input type="radio" id="italian" name="languageId" value="2">
 				<label for="italian">Italian</label>
 				<br>
-				<input type="radio" id="japanese" name="language" value="3">
+				<input type="radio" id="japanese" name="languageId" value="3">
 				<label for="japanese">Japanese</label>
 				<br>
-				<input type="radio" id="mandarin" name="language" value="4">
+				<input type="radio" id="mandarin" name="languageId" value="4">
 				<label for="mandarin">Mandarin</label>
 				<br>
-				<input type="radio" id="french" name="language" value="5">
+				<input type="radio" id="french" name="languageId" value="5">
 				<label for="french">French</label>
 				<br>
-				<input type="radio" id="german" name="language" value="6">
+				<input type="radio" id="german" name="languageId" value="6">
 				<label for="german">German</label>
 				
 				<!-- Rental Duration -->
@@ -89,7 +89,6 @@
 				
 				<!-- Special Features -->
 				<p>Special Features:</p>
-				<input type="text" id="test" name="test" size=120 value="default">
 				<input type="checkbox" id="trailers" name="sf" value="Trailers">
 				<label for="trailers">Trailers</label>
 				<br>
@@ -103,8 +102,21 @@
 				<label for="behindTheScenes">Behind The Scenes</label>
 				<br>
 				<hr>
-				<input type="submit" value="Search" />
-				<input type="submit" value="update" name = "update" />
+
+				<c:choose>
+					<c:when test='${param.status == "add" }'>
+						<input type="submit" value="Add New Film" />
+					</c:when>
+					<c:otherwise>
+						       <button type="submit" formaction="updateFilm.do">Update</button>
+						       <button type="submit" formaction="">Delete</button>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
+					<c:when test='${empty param.filmid }'>
+						<p>Update successful</p>
+					</c:when>
+				</c:choose>
 				<script>
 					/* Language Radio */
 					var langId = ${film.languageId };

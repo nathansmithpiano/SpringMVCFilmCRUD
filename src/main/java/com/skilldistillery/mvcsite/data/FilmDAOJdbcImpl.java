@@ -18,12 +18,13 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 
 	public static void main(String[] args) {
 		FilmDAOJdbcImpl dao = new FilmDAOJdbcImpl();
-		Film film = dao.getFilmById(100);
-		System.out.println(film);
-		film.setDescription("improved updeate 2");
-		boolean updated = dao.updateFilm(film);
+		List<Film> films = dao.searchFilms("Fast");
 		
-		System.out.println("Updated: " + updated);
+		for(Film film : films) {
+			System.out.println(film);
+		}
+		
+	
 	}
 	
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false"
@@ -178,6 +179,9 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			stmt.setString(10, null);
 			stmt.setInt(11, film.getId());
 			
+			// release_year 
+			
+			
 //			System.out.println(stmt);
 
 			int updateCount = stmt.executeUpdate();
@@ -234,9 +238,16 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					film.setRating(rs.getString("rating"));
 					film.setLanguage(rs.getNString("language.name"));
 
-					String[] featuresArr = rs.getString("special_features").split(",");
-					Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
-					film.setSpecialFeatures(featuresSet);
+					String rsFeatures = rs.getString("special_features");
+					if(rsFeatures != null) {
+						String[] featuresArr = rs.getString("special_features").split(",");
+						Set<String> featuresSet = new HashSet<>(Arrays.asList(featuresArr));
+						film.setSpecialFeatures(featuresSet);
+					}
+					else {
+						film.setSpecialFeatures(new HashSet<>());
+					}
+
 					
 					films.add(film);
 

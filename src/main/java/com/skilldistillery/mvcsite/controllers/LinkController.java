@@ -18,9 +18,8 @@ public class LinkController {
 	}
 	
 	@RequestMapping(path = { "goAddFilm.do" })
-	public String goAddFilm(Model model, boolean addFlag) {
-		model.addAttribute("addFlag", addFlag);
-		return "WEB-INF/addFilm.jsp";
+	public String goAddFilm() {
+		return "WEB-INF/film.jsp";
 	}
 	
 	@RequestMapping(path = { "goSearchFilm.do" })
