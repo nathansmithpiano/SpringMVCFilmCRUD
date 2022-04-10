@@ -102,6 +102,7 @@
 				<label for="behindTheScenes">Behind The Scenes</label>
 				<br>
 				<hr>
+
 				<c:choose>
 					<c:when test='${param.status == "add" }'>
 						<input type="submit" value="Add New Film" />
