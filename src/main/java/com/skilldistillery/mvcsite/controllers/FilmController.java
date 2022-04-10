@@ -38,21 +38,24 @@ public class FilmController {
 	}
 	
 	@RequestMapping(path = "removeFilm.do")
-	public String removeFilmById(Model model, String filmid) {
+	public String removeFilmById(Model model, Film film) {
 		
 		int filmId;
 		boolean filmDeleted = false;
 		
 		try {
-			filmId = Integer.parseInt(filmid);
-			if(filmId >= 1000)
+			filmId = film.getId();
+			if(filmId > 1000)
 				filmDeleted = filmDao.deleteFilmById(filmId);
 		}catch(Exception e) {
 			filmDeleted = false;			
 		}
 		System.out.println("Film Deleted: " + filmDeleted);
-		model.addAttribute("filmDeleted", filmDeleted);		
-		return "WEB-INF/film.jsp";
+		
+		model.addAttribute("status", "remove");
+		model.addAttribute("film", film);
+		model.addAttribute("filmDeleted", filmDeleted);
+		return "WEB-INF/message.jsp";
 		
 	}
 	
@@ -61,39 +64,44 @@ public class FilmController {
 		
 		boolean updated = filmDao.updateFilm(film);
 		if(updated) {
-			model.addAttribute(film);
-		}
-		else {
+			model.addAttribute("film", film);
+			model.addAttribute("status", "update");
+			model.addAttribute("filmUpdated", updated);
+		} else {
 			film = new Film();
 		}
-		return "WEB-INF/film.jsp?";
+		return "WEB-INF/message.jsp";
 	}
 	
 	
-	@RequestMapping(path = "addFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film film) {
-		System.out.println("*** FilmController.addFilm() *** ");
-		filmDao.addFilm(film);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("status", "add");
-		mv.setViewName("WEB-INF/result.jsp");
-		return mv;
+	@RequestMapping(path = "addFilm.do")
+	public String addFilm(Model model, Film film) {
+		System.out.println("*** Got this far");
+		boolean added = filmDao.addFilm(film);
+		if (added) {
+			model.addAttribute("film", film);
+			model.addAttribute("status", "add");
+			model.addAttribute("filmAdded", added);
+		} else {
+			film = new Film();
+		}
+		return "WEB-INF/message.jsp";
 	}
 	//-------------------------------------------
-		@RequestMapping(path = { "searchFilm.do" })
-		public String searchByKeyWord(Model model, String filmid) {
+	@RequestMapping(path = { "searchFilm.do" })
+	public String searchByKeyWord(Model model, String filmid) {
+		
+		String m = "mon";
+		Film f = null;
+		
+		try {
 			
-			String m = "mon";
-			Film f = null;
-			
-			try {
-				
-					filmDao.searchFilms(m);
-			}catch(Exception e) {
-			}
-			return "WEB-INF/film.jsp";
-			
+				filmDao.searchFilms(m);
+		}catch(Exception e) {
 		}
+		return "WEB-INF/film.jsp";
+		
 	}
+}
 	
 

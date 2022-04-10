@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -19,11 +20,13 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 	public static void main(String[] args) {
 		FilmDAOJdbcImpl dao = new FilmDAOJdbcImpl();
 		Film film = dao.getFilmById(100);
-		System.out.println(film);
-		film.setDescription("improved updeate 2");
-		boolean updated = dao.updateFilm(film);
+//		System.out.println(film);
+//		film.setDescription("improved updeate 2");
+//		boolean updated = dao.updateFilm(film);
+//		
+//		System.out.println("Updated: " + updated);
 		
-		System.out.println("Updated: " + updated);
+		dao.addFilm(film);
 	}
 	
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false"
@@ -102,10 +105,65 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 	}
 	
 	@Override
-	public Film addFilm(Film film) {
-		Film newFilm = null;
+	public boolean addFilm(Film film) {
+		Connection conn = null;
 		
-		return newFilm;
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "INSERT INTO film ("
+					+ "title, "
+					+ "description, "
+					+ "release_year, "
+					+ "language_id, "
+					+ "rental_duration, "
+					+ "rental_rate, "
+					+ "length, "
+					+ "replacement_cost, "
+					+ "rating, "
+					+ "special_features)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			conn.setAutoCommit(false); // START TRANSACTION
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, film.getTitle());
+			ps.setString(2, film.getDescription());
+			if (film.getReleaseYear() == null) {
+				ps.setDate(3, null);
+			} else {
+				ps.setString(3, film.getReleaseYear()  + "");
+			}
+			ps.setInt(4, film.getLanguageId());
+			ps.setInt(5, film.getRentalDuration());
+			ps.setDouble(6, film.getRental_rate());
+			ps.setInt(7,  film.getLength());
+			ps.setDouble(8, film.getReplacementCost());
+			ps.setString(9,  film.getRating());
+			ps.setString(10, null);
+			
+//			System.out.println(ps);
+			
+			ps.executeUpdate();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+		}
+		
+			
+		//verify data
+		Film newFilm = this.getFilmById(film.getId());
+		if (newFilm == null) {
+			System.err.println("Error adding new film");
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	@Override
@@ -168,7 +226,11 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
-			stmt.setInt(3, film.getReleaseYear());
+			if (film.getReleaseYear() == null) {
+				stmt.setDate(3, null);
+			} else {
+				stmt.setString(3, film.getReleaseYear()  + "");
+			}
 			stmt.setInt(4, film.getLanguageId());
 			stmt.setInt(5, film.getRentalDuration());
 			stmt.setDouble(6, film.getRental_rate());

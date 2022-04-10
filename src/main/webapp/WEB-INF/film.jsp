@@ -17,11 +17,17 @@
 		<c:otherwise>
 			<!-- new stuff -->
 			<h3>Film Details</h3>
-			<form id="filmForm" action="addFilm.do" method="POST">
-				<input type="hidden" name="id" value="${film.id }">
+			
+			<form id="filmForm" action="addFilm.do" method="GET">
+				<!-- Only include ID within form when updating or deleting -->
+				<c:choose>
+					<c:when test='${param.status != "add" }'>
+						<input type="hidden" name="id" value="${film.id }">
+					</c:when>
+				</c:choose>
 				<!-- Title -->
 				<label for="title">Title:</label>
-				<input type="text" name="title" size="30" value="${film.title}" required>
+				<input type="text" id="title" name="title" size="30" value="${film.title}">
 				<!-- Description -->
 				<br>
 				<label for="description">Description:</label>
@@ -29,7 +35,8 @@
 				<!-- Release Year -->
 				<br>
 				<label for="releaseYear">Release Year:</label>
-				<input type="number" name="releaseYear" min="1895" max="2022" value="${film.releaseYear}">
+				<input type="number" id="releaseYear" name="releaseYear" min="1895" max="2022" value="${film.releaseYear}">
+
 				<!-- Language -->
 				<br>
 				<p>Language:</p>
@@ -104,19 +111,26 @@
 				<hr>
 				<c:choose>
 					<c:when test='${param.status == "add" }'>
-						<input type="submit" value="Add New Film" />
+							<input type="submit" value="Add Film">
 					</c:when>
 					<c:otherwise>
-						       <button type="submit" formaction="updateFilm.do">Update</button>
-						       <button type="submit" formaction="">Delete</button>
+					       <button type="submit" formaction="updateFilm.do" onclick="return confirm('UPDATE: Are you sure?')">
+					       	Update
+					       	</button>
+					       <button type="submit" formaction="removeFilm.do" onclick="return confirm('REMOVE: Are you sure?')">
+					       	Remove
+					       </button>
 					</c:otherwise>
 				</c:choose>
-				<c:choose>
-					<c:when test='${empty param.filmid }'>
-						<p>Update successful</p>
-					</c:when>
-				</c:choose>
 				<script>
+						
+					/* Release Year */
+					var relYear = ${film.releaseYear}; 
+					if (relYear == 0) {
+						var field = document.getElementById("releaseYear");
+						field.setAttribute('value', "");
+					}
+				
 					/* Language Radio */
 					var langId = ${film.languageId };
 					switch (langId) {
@@ -158,6 +172,10 @@
 						output.innerHTML = this.value;
 					}
 					
+					/* Rating Radio */
+					var rat = document.getElementById("${film.rating }");
+					rat.checked = true;
+					
 					/* Rental Duration Slider */
 					var slider = document.getElementById("rentalDuration");
 					var output = document.getElementById("rentalDays");
@@ -166,9 +184,7 @@
 						output.innerHTML = this.value;
 					}
 					
-					/* Rating Radio */
-					var rat = document.getElementById("${film.rating }");
-					rat.checked = true;
+					
 					
 					
 				</script>
