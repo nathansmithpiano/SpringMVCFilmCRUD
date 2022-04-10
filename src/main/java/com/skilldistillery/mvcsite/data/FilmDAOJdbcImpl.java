@@ -5,13 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.skilldistillery.mvcsite.entities.Actor;
 import com.skilldistillery.mvcsite.entities.Film;
 
 public class FilmDAOJdbcImpl implements FilmDAO {
@@ -88,6 +88,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return film;
 	}
 	
@@ -306,8 +307,35 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return films;
+	}
 	
+	public List<Actor> findActorsByFilmId(int filmId) {
+		List<Actor> actors = new ArrayList<Actor>();
+
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+
+			String sql = "select id, first_name, last_name FROM actor join film_actor on actor.id = film_actor.actor_id where film_actor.film_id = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, filmId);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Actor actor = new Actor();
+				actor.setId(rs.getInt(1));
+				actor.setFirstName(rs.getString(2));
+				actor.setLastName(rs.getString(3));
+				actors.add(actor);
+//				findFilmByKeyWord(sql);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return actors;
 	}
 
 }
