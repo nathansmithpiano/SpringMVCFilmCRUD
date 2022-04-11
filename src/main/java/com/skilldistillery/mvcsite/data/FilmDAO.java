@@ -13,5 +13,6 @@ public interface FilmDAO {
 	public boolean updateFilm(Film film);			//US4
 	public List<Film> searchFilms(String keyword);	//US5
 	List<Actor> findActorsByFilmId(int filmId);		//Stretch
+	String findFilmCategory(Film film);
 
 }
