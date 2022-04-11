@@ -119,19 +119,40 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			if (film.getReleaseYear() == null) {
 				ps.setDate(3, null);
 			} else {
-				ps.setString(3, film.getReleaseYear()  + "");
+				ps.setInt(3, film.getReleaseYear());
 			}
-			ps.setInt(4, film.getLanguageId());
-			ps.setInt(5, film.getRentalDuration());
-			ps.setDouble(6, film.getRental_rate());
-			ps.setInt(7,  film.getLength());
-			ps.setDouble(8, film.getReplacementCost());
+			if (film.getLanguageId() == null) {
+				ps.setInt(4, 1);
+			} else {
+				ps.setInt(4, film.getLanguageId());
+			}
+			if (film.getRentalDuration() == null) {
+				ps.setInt(5, 3);
+			} else {
+				ps.setInt(5, film.getRentalDuration());
+			}
+			if (film.getRental_rate() == null) {
+				ps.setDouble(6, 4.99);
+			} else {
+				ps.setDouble(6, film.getRental_rate());
+			}
+			if (film.getLength() == null) {
+				ps.setString(7, null);
+			} else {
+				ps.setInt(7,  film.getLength());
+			}
+			if (film.getReplacementCost() == null) {
+				ps.setDouble(8, 19.99);
+			} else {
+				ps.setDouble(8, film.getReplacementCost());
+			}
 			ps.setString(9,  film.getRating());
 			ps.setString(10, null);
 			
-//			System.out.println(ps);
+			System.out.println("*** SQL: " + ps);
 			
 			ps.executeUpdate();
+			conn.commit(); // COMMIT TRANSACTION
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
@@ -141,16 +162,9 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					System.err.println("Error trying to rollback");
 				}
 			}
-		}
-		
-		//verify data
-		Film newFilm = this.getFilmById(film.getId());
-		if (newFilm == null) {
-			System.err.println("Error adding new film");
 			return false;
-		} else {
-			return true;
 		}
+		return true;
 	}
 
 	@Override
@@ -198,17 +212,17 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			conn.setAutoCommit(false); // START TRANSACTION
 
 			String sql = "UPDATE film SET \n"
-					+ "title= ? ,\n"
-					+ "description= ? ,\n"
-					+ "release_year= ?,\n"
-					+ "language_id= ?,\n"
+					+ "title = ? ,\n"
+					+ "description = ? ,\n"
+					+ "release_year = ?,\n"
+					+ "language_id = ?,\n"
 					+ "rental_duration = ?,\n"
 					+ "rental_rate = ?,\n"
 					+ "length = ?,\n"
 					+ "replacement_cost = ?,\n"
 					+ "rating = ?,\n"
 					+ "special_features = ?\n"
-					+ "WHERE id= ?;";
+					+ "WHERE id = ?;";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, film.getTitle());
@@ -218,19 +232,36 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			} else {
 				stmt.setString(3, film.getReleaseYear()  + "");
 			}
-			stmt.setInt(4, film.getLanguageId());
-			stmt.setInt(5, film.getRentalDuration());
-			stmt.setDouble(6, film.getRental_rate());
-			stmt.setInt(7, film.getLength());
-			stmt.setDouble(8, film.getReplacementCost());
+			if (film.getLanguageId() == null) {
+				stmt.setInt(4, 1);
+			} else {
+				stmt.setInt(4, film.getLanguageId());
+			}
+			if (film.getRentalDuration() == null) {
+				stmt.setInt(5, 3);
+			} else {
+				stmt.setInt(5, film.getRentalDuration());
+			}
+			if (film.getRental_rate() == null) {
+				stmt.setDouble(6, 4.99);
+			} else {
+				stmt.setDouble(6, film.getRental_rate());
+			}
+			if (film.getLength() == null) {
+				stmt.setString(7, null);
+			} else {
+				stmt.setInt(7, film.getLength());
+			}
+			if (film.getReplacementCost() == null) {
+				stmt.setDouble(8, 19.99);
+			} else {
+				stmt.setDouble(8, film.getReplacementCost());
+			}
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, null);
-			stmt.setInt(11, film.getId());
+			stmt.setInt(11, film.getId()); //WHERE id= ?
 			
-			// release_year 
-			
-			
-//			System.out.println(stmt);
+			System.out.println("*** SQL: " + stmt);
 
 			int updateCount = stmt.executeUpdate();
 			if(updateCount == 0) {
@@ -277,14 +308,26 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					film.setId(rs.getInt("id"));
 					film.setTitle(rs.getString("title"));
 					film.setDescription(rs.getString("description"));
-					film.setReleaseYear(rs.getInt("release_year"));
+					// release_year and length can be null, so display as null (not 0)
+					if (rs.getString("release_year") == null) {
+						film.setReleaseYear(null);
+					} else {
+						film.setReleaseYear(rs.getInt("release_year"));
+					}
+					if (rs.getString("length") == null) {
+						film.setLength(null);
+					} else {
+						film.setLength(rs.getInt("length"));
+					}
+					//NOT NULL, ALWAYS RECEIVED FROM FORM
 					film.setLanguageId(rs.getInt("language_id"));
 					film.setRentalDuration(rs.getInt("rental_duration"));
 					film.setRental_rate(rs.getDouble("rental_rate"));
-					film.setLength(rs.getInt("length"));
 					film.setReplacementCost(rs.getDouble("Replacement_cost"));
 					film.setRating(rs.getString("rating"));
-					film.setLanguage(rs.getNString("language.name"));
+					film.setLanguage(rs.getString("language.name"));
+					
+					// YES NULL
 
 					String rsFeatures = rs.getString("special_features");
 					if(rsFeatures != null) {

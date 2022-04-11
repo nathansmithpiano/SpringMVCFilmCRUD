@@ -11,7 +11,7 @@
 <body>
 	
 	<c:choose>
-		<c:when test='${empty film and((param.status) != "add")}'>
+		<c:when test='${empty film }'>
 			<h4>FILM NOT FOUND</h4>
 		</c:when>
 		<c:otherwise>
@@ -19,15 +19,10 @@
 			<h3>Film Details</h3>
 			
 			<form id="filmForm" action="addFilm.do" method="GET">
-				<!-- Only include ID within form when updating or deleting -->
-				<c:choose>
-					<c:when test='${param.status != "add" }'>
-						<input type="hidden" name="id" value="${film.id }">
-					</c:when>
-				</c:choose>
 				<!-- Title -->
+				<input type="hidden" id="id" name="id" value="${film.id }">
 				<label for="title">Title:</label>
-				<input type="text" id="title" name="title" size="30" value="${film.title}">
+				<input type="text" id="title" name="title" size="30" value="${film.title}" required>
 				<!-- Description -->
 				<br>
 				<label for="description">Description:</label>
@@ -61,21 +56,21 @@
 				<!-- Rental Duration -->
 				<br>
 				<label for="rentalDuration">Rental Duration (days)</label>
-				<input type="range" id="rentalDuration" name="rentalDuration" min="1" max="7" value="4">
+				<input type="range" id="rentalDuration" name="rentalDuration" min="1" max="7" value="${film.rentalDuration}" required>
 				Days: <span id="rentalDays"></span>
 				
 				<!-- Rental Rate -->
 				<br>
 				<label for="rental_rate">Rental Rate</label>
-				<input type="text" name="rental_rate" size="6" value="${film.rental_rate}">
+				<input type="text" name="rental_rate" step="0.01" size="6" min="0" value="${film.rental_rate}">
 				<!-- Length -->
 				<br>
 				<label for="length">Length (min):</label>
-				<input type="number" name="length" min="0" max="300" value="${film.length}">
+				<input type="number" id="length" name="length" min="0" value="${film.length}">
 				<!-- Replacement Cost -->
 				<br>
 				<label for="replacementCost">Replacement Cost</label>
-				<input type="text" name="replacementCost" size="6" value="${film.replacementCost}">
+				<input type="text" name="replacementCost" step="0.01" size="6" value="${film.replacementCost}">
 				<!-- Rating -->
 				<br>
 				<p>Rating:</p>
@@ -110,86 +105,81 @@
 				<br>
 				<hr>
 
-				<c:choose>
-					<c:when test='${param.status == "add" }'>
-							<input type="submit" value="Add Film">
-					</c:when>
-					<c:otherwise>
-					       <button type="submit" formaction="updateFilm.do" onclick="return confirm('UPDATE: Are you sure?')">
-					       	Update
-					       	</button>
-					       <button type="submit" formaction="removeFilm.do" onclick="return confirm('REMOVE: Are you sure?')">
-					       	Remove
-					       </button>
-					</c:otherwise>
-				</c:choose>
-				<script>
-						
-					/* Release Year */
-					var relYear = ${film.releaseYear}; 
-					if (relYear == 0) {
-						var field = document.getElementById("releaseYear");
-						field.setAttribute('value', "");
-					}
-				
-					/* Language Radio */
-					var langId = ${film.languageId };
-					switch (langId) {
-					case 1:
-						var lang = document.getElementById("english");
-						lang.checked = true;
-						break;
-					case 2:
-						var lang = document.getElementById("italian");
-						lang.checked = true;
-						break;
-					case 3:
-						var lang = document.getElementById("japanese");
-						lang.checked = true;
-						break;
-					case 4:
-						var lang = document.getElementById("mandarin");
-						lang.checked = true;
-						break;
-					case 5:
-						var lang = document.getElementById("french");
-						lang.checked = true;
-						break;
-					case 6:
-						var lang = document.getElementById("german");
-						lang.checked = true;
-						break;
-					}
-					
-					/* Rental Duration */
-					//set from film
-					var rentDur = document.getElementById("rentalDuration");
-					rentDur.value = ${film.rentalDuration };
-					//slider
-					var slider = document.getElementById("rentalDuration");
-					var output = document.getElementById("rentalDays");
-					output.innerHTML = slider.value;
-					slider.oninput = function() {
-						output.innerHTML = this.value;
-					}
-					
-					/* Rating Radio */
-					var rat = document.getElementById("${film.rating }");
-					rat.checked = true;
-					
-					/* Rental Duration Slider */
-					var slider = document.getElementById("rentalDuration");
-					var output = document.getElementById("rentalDays");
-					output.innerHTML = slider.value;
-					slider.oninput = function() {
-						output.innerHTML = this.value;
-					}
-					
-					
-					
-					
-				</script>
+		       <button type="submit" formaction="updateFilm.do" onclick="return confirm('UPDATE: Are you sure?')">
+		       	Update
+		       	</button>
+		       <button type="submit" formaction="removeFilm.do?filmid=${film.id}" onclick="return confirm('REMOVE: Are you sure?')">
+		       	Remove
+		       </button>
 			</form>
+			<script>
+						
+				/* Release Year remove if 0 */
+				var relYear = ${film.releaseYear}; 
+				if (relYear == 0) {
+					var field = document.getElementById("releaseYear");
+					field.setAttribute('value', "");
+				}
+				var len = ${film.length}; 
+				if (len == 0) {
+					var field = document.getElementById("length");
+					field.setAttribute('value', "");
+				}
+			
+				/* Language Radio */
+				var langId = ${film.languageId };
+				switch (langId) {
+				case 1:
+					var lang = document.getElementById("english");
+					lang.checked = true;
+					break;
+				case 2:
+					var lang = document.getElementById("italian");
+					lang.checked = true;
+					break;
+				case 3:
+					var lang = document.getElementById("japanese");
+					lang.checked = true;
+					break;
+				case 4:
+					var lang = document.getElementById("mandarin");
+					lang.checked = true;
+					break;
+				case 5:
+					var lang = document.getElementById("french");
+					lang.checked = true;
+					break;
+				case 6:
+					var lang = document.getElementById("german");
+					lang.checked = true;
+					break;
+				}
+				
+				/* Rental Duration */
+				//set from film
+				var rentDur = document.getElementById("rentalDuration");
+				rentDur.value = ${film.rentalDuration };
+				
+				//slider
+				var slider = document.getElementById("rentalDuration");
+				var output = document.getElementById("rentalDays");
+				output.innerHTML = slider.value;
+				slider.oninput = function() {
+					output.innerHTML = this.value;
+				}
+				
+				/* Rating Radio */
+				var rat = document.getElementById("${film.rating }");
+				rat.checked = true;
+				
+				/* Rental Duration Slider */
+				var slider = document.getElementById("rentalDuration");
+				var output = document.getElementById("rentalDays");
+				output.innerHTML = slider.value;
+				slider.oninput = function() {
+					output.innerHTML = this.value;
+				}
+			</script>
 		</c:otherwise>
 	</c:choose>
 	

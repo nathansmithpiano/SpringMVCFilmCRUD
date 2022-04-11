@@ -19,7 +19,7 @@ public class LinkController {
 	
 	@RequestMapping(path = { "goAddFilm.do" })
 	public String goAddFilm() {
-		return "WEB-INF/film.jsp";
+		return "WEB-INF/addFilm.jsp";
 	}
 	
 	@RequestMapping(path = { "goSearchFilm.do" })

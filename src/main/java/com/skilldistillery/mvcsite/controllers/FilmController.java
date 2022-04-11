@@ -36,21 +36,21 @@ public class FilmController {
 	}
 	
 	@RequestMapping(path = "removeFilm.do")
-	public String removeFilmById(Model model, String filmid) {
+	public String removeFilmById(Model model, String id) {
 
 		int filmId;
 		boolean filmDeleted = false;
 
 		try {
-			filmId = Integer.parseInt(filmid);
+			filmId = Integer.parseInt(id);
 			if (filmId >= 1000)
 				filmDeleted = filmDao.deleteFilmById(filmId);
 		} catch (Exception e) {
 			filmDeleted = false;
 		}
-		
+		model.addAttribute("filmDeletedId", id);
 		model.addAttribute("filmDeleted", filmDeleted);
-		return "WEB-INF/film.jsp";
+		return "WEB-INF/removeResult.jsp";
 	}
 	
 	@RequestMapping(path = "removeFilmFromTable.do")
@@ -81,7 +81,7 @@ public class FilmController {
 			model.addAttribute("filmUpdated", updated);
 		}
 		
-		return "WEB-INF/message.jsp";
+		return "WEB-INF/message.jsp"; //CHANGE THIS
 	}
 
 
@@ -118,7 +118,7 @@ public class FilmController {
 			model.addAttribute("filmAdded", added);
 		}
 		
-		return "WEB-INF/message.jsp";
+		return "WEB-INF/message.jsp"; //CHANGE THIS
 	}
 
 	@RequestMapping(path = { "searchFilm.do" })
@@ -136,5 +136,22 @@ public class FilmController {
 		model.addAttribute("films", films);
 		
 		return "WEB-INF/viewFilms.jsp";
+	}
+	
+	@RequestMapping(path = { "showFilm.do" })
+	public String showFilm(Model model, String filmid) {
+
+		int filmId;
+		Film f = null;
+
+		try {
+			filmId = Integer.parseInt(filmid);
+			f = filmDao.getFilmById(filmId);
+		} catch (Exception e) {
+		}
+		
+		model.addAttribute("film", f);
+		return "WEB-INF/viewFilmbyId.jsp";
+
 	}
 }
