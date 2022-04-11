@@ -13,7 +13,7 @@ public class Film {
 
 	private Integer releaseYear;
 
-	private int languageId;
+	private Integer languageId;
 
 	private String language;
 
@@ -27,14 +27,14 @@ public class Film {
 
 	private Set<String> specialFeatures;
 
-	private int rentalDuration;
+	private Integer rentalDuration;
 
-	private double rental_rate;
+	private Double rental_rate;
 
-	private double replacementCost;
+	private Double replacementCost;
 
-	public Film(int id, String title, String description, Integer releaseYear, int languageId, int rentalDuration,
-			double rental_rate, Integer length, double replacementCost, String rating, Set<String> specialFeatures,
+	public Film(int id, String title, String description, Integer releaseYear, Integer languageId, Integer rentalDuration,
+			Double rental_rate, Integer length, Double replacementCost, String rating, Set<String> specialFeatures,
 			String language) {
 		super();
 		this.id = id;
@@ -103,27 +103,27 @@ public class Film {
 		this.releaseYear = releaseYear;
 	}
 
-	public int getLanguageId() {
+	public Integer getLanguageId() {
 		return languageId;
 	}
 
-	public void setLanguageId(int languageId) {
+	public void setLanguageId(Integer languageId) {
 		this.languageId = languageId;
 	}
 
-	public int getRentalDuration() {
+	public Integer getRentalDuration() {
 		return rentalDuration;
 	}
 
-	public void setRentalDuration(int rentalDuration) {
+	public void setRentalDuration(Integer rentalDuration) {
 		this.rentalDuration = rentalDuration;
 	}
 
-	public double getRental_rate() {
+	public Double getRental_rate() {
 		return rental_rate;
 	}
 
-	public void setRental_rate(double rental_rate) {
+	public void setRental_rate(Double rental_rate) {
 		this.rental_rate = rental_rate;
 	}
 
@@ -131,15 +131,15 @@ public class Film {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(Integer length) {
 		this.length = length;
 	}
 
-	public double getReplacementCost() {
+	public Double getReplacementCost() {
 		return replacementCost;
 	}
 
-	public void setReplacementCost(double replacementCost) {
+	public void setReplacementCost(Double replacementCost) {
 		this.replacementCost = replacementCost;
 	}
 
@@ -172,10 +172,6 @@ public class Film {
 
 	public void setCast(List<Actor> cast) {
 		this.cast = cast;
-	}
-
-	public void setLength(Integer length) {
-		this.length = length;
 	}
 
 	public String getLanguage() {
