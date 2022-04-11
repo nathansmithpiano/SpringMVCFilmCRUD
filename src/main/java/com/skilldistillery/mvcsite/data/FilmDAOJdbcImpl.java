@@ -301,7 +301,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			String sql = "select film.id, film.title, film.description, film.release_year, film.language_id, "
 					+ " film.rental_duration, film.rental_rate, film.length, film.replacement_cost, film.rating, film.special_features, language.name"
 					+ " from film join language on film.language_id = language.id "
-					+ " WHERE title LIKE ? or description LIKE ?";
+					+ " WHERE title LIKE ? or description LIKE ?"
+					+ " ORDER BY film.id";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, keyWordConcat);
 			ps.setString(2, keyWordConcat);

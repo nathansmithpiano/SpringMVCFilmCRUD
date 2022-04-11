@@ -41,7 +41,7 @@
 				
 				<form id="filmForm" action="addFilm.do" method="GET">
 					<!-- Title -->
-					<input type="hidden" id="filmid" name="filmid" value="${film.id }">
+					<input type="hidden" id="id" name="id" value="${film.id }">
 					<label for="title">Title:</label>
 					<input type="text" id="title" name="title" size="30" value="${film.title}" required>
 					<!-- Description -->
