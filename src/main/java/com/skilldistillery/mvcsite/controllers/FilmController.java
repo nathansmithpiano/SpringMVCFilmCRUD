@@ -1,15 +1,15 @@
 package com.skilldistillery.mvcsite.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.skilldistillery.mvcsite.data.FilmDAO;
+import com.skilldistillery.mvcsite.entities.Actor;
 import com.skilldistillery.mvcsite.entities.Film;
 
 @Controller
@@ -147,9 +147,11 @@ public class FilmController {
 		try {
 			filmId = Integer.parseInt(filmid);
 			f = filmDao.getFilmById(filmId);
+
 		} catch (Exception e) {
 		}
 		
+		model.addAttribute("actors", f.getCast());
 		model.addAttribute("film", f);
 		return "WEB-INF/viewFilmbyId.jsp";
 

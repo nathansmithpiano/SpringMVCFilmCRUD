@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-md style=" background-color:#e3f2fd;">
+	<nav class="navbar navbar-expand-md style="background-color:#e3f2fd;">
 		<a class="navbar-brand" href="#">FilmMVC</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarText" aria-controls="navbarText"
@@ -41,7 +41,7 @@
 			<button type="submit" class="btn btn-success">Search</button>
 		</div>
 	</form>
-	
+
 	<form action="showFilm.do" id="searchForm">
 		<div class="searchByKeywordFrom">
 			<label id="keywordLabel">Film ID</label> <input type="text"
@@ -53,17 +53,28 @@
 
 	<!-- --- -->
 	<div class="filmViewContainer">
-		<div class = "item">${film.title}</div><br>
-		<div class = "item">${film.releaseYear}</div>
-		<div class = "item">${film.description}</div>
-		<div class = "item">Film id: ${film.id}</div>
-		<div class = "item">${film.languageId}</div>
-		<div class = "item">${film.rentalDuration}</div>
-		<div class = "item">${film.rental_rate}</div>
-		<div class = "item">${film.length}</div>
-		<div class = "item">${film.replacementCost}</div>
-		<div class = "item">${film.rating}</div>
-		<div class = "item">${film.specialFeatures}</div>
+		<div class="item">${film.title}</div>
+		<br>
+		<div class="item">${film.releaseYear}</div>
+		<div class="item">${film.description}</div>
+		<div class="item">Film id: ${film.id}</div>
+		<div class="item">${film.languageId}</div>
+		<div class="item">${film.rentalDuration}</div>
+		<div class="item">${film.rental_rate}</div>
+		<div class="item">${film.length}</div>
+		<div class="item">${film.replacementCost}</div>
+		<div class="item">${film.rating}</div>
+		<div class="item">${film.specialFeatures}</div>
+		<div class="item">${film.category}</div>
+		
+
+		<h4>Cast</h4>
+		<c:forEach items="${actors}" var="actor">
+				<h4><c:out value="${actor.firstName} ${actor.lastName}" /></h4>
+
+		</c:forEach>
+
+
 
 	</div>
 
