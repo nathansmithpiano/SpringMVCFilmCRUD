@@ -113,4 +113,21 @@ public class FilmController {
 		
 		return "WEB-INF/viewFilms.jsp";
 	}
+	
+	@RequestMapping(path = { "showFilm.do" })
+	public String showFilm(Model model, String filmid) {
+
+		int filmId;
+		Film f = null;
+
+		try {
+			filmId = Integer.parseInt(filmid);
+			f = filmDao.getFilmById(filmId);
+		} catch (Exception e) {
+		}
+		
+		model.addAttribute("film", f);
+		return "WEB-INF/viewFilmbyId.jsp";
+
+	}
 }
