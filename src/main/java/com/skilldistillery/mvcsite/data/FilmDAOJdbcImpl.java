@@ -38,6 +38,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 	@Override
 	public Film getFilmById(int id) {
 		Film film = null;
+		
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
@@ -63,6 +64,12 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					film.setLength(rs.getInt("length"));
 					film.setReplacementCost(rs.getDouble("Replacement_cost"));
 					film.setRating(rs.getString("rating"));
+					
+					film.setCast(findActorsByFilmId(film.getId()));
+			
+					String categories = findFilmCategory(film);
+					film.setCategory(categories);
+					
 					
 					
 					String features = rs.getString("special_features");
@@ -375,10 +382,63 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return actors;
 	}
+	@Override
+	public String findFilmCategory(Film film) {
+
+		if (film == null) {
+			return null;
+		}
+
+		String category = null;
+
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement stmt = null;
+		
+		
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			String sql = "select category from film_list JOIN film ON film.id = film_list.fid where film.id = ?";
+			stmt = conn.prepareStatement(sql);
+
+			stmt.setInt(1, film.getId());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+
+				category = rs.getString(1);
+				film.setCategory(category);
+
+			}
+
+			return category;
+
+		} catch (SQLException e) {
+			System.out.println("Database error");
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				} 
+				if (stmt != null) {
+					stmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException sqle) {
+				System.err.println(sqle);
+			}
+		}
+
+		return null;
+
 }
+} 

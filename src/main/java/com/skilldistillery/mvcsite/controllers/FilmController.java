@@ -143,17 +143,15 @@ public class FilmController {
 
 		int filmId;
 		Film f = null;
-		List<Actor> actors = new ArrayList<>();
 
 		try {
 			filmId = Integer.parseInt(filmid);
 			f = filmDao.getFilmById(filmId);
-			List<Actor> tmp = filmDao.findActorsByFilmId(filmId);
-			actors.addAll(tmp);
+
 		} catch (Exception e) {
 		}
 		
-		model.addAttribute("actors", actors);
+		model.addAttribute("actors", f.getCast());
 		model.addAttribute("film", f);
 		return "WEB-INF/viewFilmbyId.jsp";
 
