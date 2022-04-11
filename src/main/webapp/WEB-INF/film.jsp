@@ -40,7 +40,7 @@
 				<!-- Language -->
 				<br>
 				<p>Language:</p>
-				<input type="radio" id="english" name="languageId" value="1" required>
+				<input type="radio" id="english" name="languageId" value="1">
 				<label for="english">English</label>
 				<br>
 				<input type="radio" id="italian" name="languageId" value="2">
