@@ -43,8 +43,8 @@
 
 	<form action="showFilm.do" id="searchForm">
 		<div class="searchByKeywordFrom">
-			<label id="keywordLabel">Film ID</label> <input type="text"
-				name="filmid">
+			<label id="keywordLabel">Film ID</label> <input type="number"
+				min="1" name="filmid">
 			<button type="submit" class="btn btn-success">Search</button>
 		</div>
 	</form>
