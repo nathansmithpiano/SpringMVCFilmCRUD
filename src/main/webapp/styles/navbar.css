@@ -1,0 +1,12 @@
+nav {
+	max-width: 98%;
+	margin: 2%;
+	padding: 2%;
+}
+
+.filmViewContainer {
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
