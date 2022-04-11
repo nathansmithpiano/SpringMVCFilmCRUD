@@ -83,6 +83,30 @@ public class FilmController {
 		
 		return "WEB-INF/message.jsp"; //CHANGE THIS
 	}
+
+
+	// -------------------------------------------
+//	@RequestMapping(path = { "searchFilm.do" })
+//	public String searchByKeyWord(Model model, String filmid) {
+//
+//		List<Film> films = null;
+//
+//		try {
+//			System.out.println("Film id" + filmid);
+//			films = filmDao.searchFilms(filmid);
+//		} catch (Exception e) {
+//			
+//		}
+//	}
+//	
+////
+////		model.addAttribute("searchTerm", filmid);
+////		
+////		model.addAttribute("films", films);
+//		return "WEB-INF/viewFilms.jsp";
+//
+//	}
+
 	
 	@RequestMapping(path = "addFilm.do")
 	public String addFilm(Model model, Film film) {
