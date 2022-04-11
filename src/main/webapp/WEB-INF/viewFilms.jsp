@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-md style=" background-color:#e3f2fd;">
+	<nav class="navbar navbar-expand-md style="background-color:#e3f2fd;">
 		<a class="navbar-brand" href="#">FilmMVC</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarText" aria-controls="navbarText"
@@ -23,10 +23,9 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="home.do">Home
-				</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="searchFilm.do?filmid=">Search Films</a></li>
+				<li><a class="nav-link" href="goAddFilm.do">Add Film</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -54,10 +53,10 @@
 	<c:choose>
 
 		<c:when test="${empty films}">
-			<h4>${films.size()}films found</h4>
+			<h4>${films.size()} films found</h4>
 		</c:when>
 		<c:otherwise>
-			<h4>${films.size()}films found</h4>
+			<h4>${films.size()} films found</h4>
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr>
@@ -77,14 +76,22 @@
 					</tr>
 				</thead>
 				<c:forEach items="${films}" var="film">
-					<td><a href="displayFilm.do?filmid=${film.id}"><button
-								class="btn btn-secondary">Update</button></a></td>
-					<td><a
-						href="removeFilmFromTable.do?filmid=${film.id}&searchTerm=${searchTerm}"><button
-								class="btn btn-danger"
-								onclick="return confirm('Are you sure you want to delete ${film.title}?')">Remove</button></a></td>
+					<c:choose>
+						<c:when test="${film.id <= 1000}">
+							<td><button class="btn btn-secondary">N/A</button></td>
+							<td><button class="btn btn-danger">N/A</button></td>
+						</c:when>
+						<c:otherwise>
+							<td><a href="displayFilm.do?filmid=${film.id}"><button
+										class="btn btn-secondary">Update</button></a></td>
+							<td><a
+								href="removeFilmFromTable.do?filmid=${film.id}&searchTerm=${searchTerm}"><button
+										class="btn btn-danger"
+										onclick="return confirm('Are you sure you want to delete ${film.title}?')">Remove</button></a></td>
+						</c:otherwise>
+					</c:choose>
 					<td>${film.id}</td>
-					<td>${film.title}</td>
+					<td><a href="showFilm.do?filmid=${film.id}">${film.title}</a></td>
 					<td>${film.releaseYear}</td>
 					<td>${film.description}</td>
 					<td>${film.languageId}</td>

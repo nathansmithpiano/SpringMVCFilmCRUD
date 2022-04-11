@@ -7,6 +7,12 @@ nav {
 .filmViewContainer {
 	display: flex;
 	flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	align-items: center;
+	justify-content: center;
+}
+
+.filmViewContainerButtons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

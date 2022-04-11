@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -85,8 +86,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					
 					film.setLanguage(rs.getNString("language.name"));
 					
-//					film.setActors(findActorsByFilmId(id));
-
 				}
 				rs.close();
 				ps.close();
@@ -100,8 +99,9 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 	}
 	
 	@Override
-	public boolean addFilm(Film film) {
+	public int addFilm(Film film) {
 		Connection conn = null;
+		int newId = -1;
 		
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
@@ -120,7 +120,7 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			
 			conn.setAutoCommit(false); // START TRANSACTION
 
-			PreparedStatement ps = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, film.getTitle());
 			ps.setString(2, film.getDescription());
 			if (film.getReleaseYear() == null) {
@@ -156,10 +156,12 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			ps.setString(9,  film.getRating());
 			ps.setString(10, null);
 			
-			System.out.println("*** SQL: " + ps);
-			
 			ps.executeUpdate();
 			conn.commit(); // COMMIT TRANSACTION
+			ResultSet rs2 = ps.getGeneratedKeys();
+			if (rs2.next()) {
+				newId = rs2.getInt(1);
+			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
@@ -169,9 +171,8 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 					System.err.println("Error trying to rollback");
 				}
 			}
-			return false;
 		}
-		return true;
+		return newId;
 	}
 
 	@Override
@@ -268,8 +269,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 			stmt.setString(10, null);
 			stmt.setInt(11, film.getId()); //WHERE id= ?
 			
-			System.out.println("*** SQL: " + stmt);
-
 			int updateCount = stmt.executeUpdate();
 			if(updateCount == 0) {
 				return false;
@@ -378,7 +377,6 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 				actor.setFirstName(rs.getString(2));
 				actor.setLastName(rs.getString(3));
 				actors.add(actor);
-//				findFilmByKeyWord(sql);
 			}
 
 		} catch (SQLException e) {
