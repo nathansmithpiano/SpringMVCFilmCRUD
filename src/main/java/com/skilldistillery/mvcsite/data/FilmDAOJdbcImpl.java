@@ -382,4 +382,3 @@ public class FilmDAOJdbcImpl implements FilmDAO {
 		return actors;
 	}
 }
-
