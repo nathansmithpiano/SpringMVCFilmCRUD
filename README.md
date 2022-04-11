@@ -1,7 +1,6 @@
 # SpringMVCFilmCRUD
 
-  -- Developed for Skill Distillery Bootcamp Cohort 32 --
-  -- Developed by Alex Trill, Miguel Barrios, and Nathan Smith --
+  -- Developed for Skill Distillery Bootcamp Cohort 32 by Alex Trill, Miguel Barrios, and Nathan Smith --
 
 ### Description
 
