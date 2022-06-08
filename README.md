@@ -2,10 +2,12 @@
 
   -- Developed for Skill Distillery Bootcamp Cohort 32 by Alex Trill, Miguel Barrios, and Nathan Smith --
 
+  View this project deployed to AWS: http://52.52.235.108:8080/MVCFilmSite
+
 ### Description
 
   This is a web  application that allows the user to retrieve and or manipulates data from a database. The user is presented with a home page that displays a table of films from which they can view details about existing  films or execute a search  by either entering the film's ID, or by inputting a keyword that attempts to match their keyword to a  films description or title. From this main page, the user also has the option to remove or update and existing film, but only if the film is one that has been added by that user as none of the original films from the database are modifiable. Or they can navigate to a separate page that allows them to add a film to the database, this is done by filling out a form, inputing the necessary information for that film and submitting.
-  
+
 ### Cool Features
 
 - A user can select a film from the table and be taken to a more detailed view of its information.
